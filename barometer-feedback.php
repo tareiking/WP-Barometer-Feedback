@@ -30,6 +30,8 @@ class TK_Barometer {
 	}
 
 	function __construct() {
+		$this->barometer_string = "Pkn77MNnD8e4bLKHDm5zq";
+
 		add_action( 'admin_menu', array( $this, 'add_admin_menu_item' ) );
 
 		if ( ! is_admin() ) {
@@ -53,8 +55,8 @@ class TK_Barometer {
 
 	// Lets load some scripts eh -- but only on the front-end
 	public function load_barometer_scripts() {
-		wp_enqueue_style( 'barometer-css', 'http://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css' );
-		wp_enqueue_script( 'barometer', 'http://getbarometer.s3.amazonaws.com/assets/barometer/javascripts/barometer.js', array(), '1.0', true );
+		wp_enqueue_style( 'barometer-css', 'https://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css' );
+		wp_enqueue_script( 'barometer', 'https://getbarometer.s3.amazonaws.com/assets/barometer/javascripts/barometer.js', array(), '1.0', true );
 		add_action( 'wp_footer', array( $this, 'generate_barometer_script' ), 20 );
 	}
 
