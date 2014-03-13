@@ -13,3 +13,7 @@ Please note; All styling is currently supplied by Barometer.
 - Add uninstall function for being a good houseguest
 - Add SSL support to JS scripts
 - Allow custom CSS for tab
+- Internationalisation
+
+V2. 
+- Replace barometer with Core WP functionality for forms and emailing
