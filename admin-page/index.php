@@ -30,25 +30,24 @@
 					</div> <!-- .postbox -->
 					
 				</div> <!-- .meta-box-sortables .ui-sortable -->
+				<h2><span>GIF example</span></h2>
 				<img src="<?php echo plugin_dir_url( __FILE__ ) . '../images/barometer-setup.gif' ; ?>" width="100%" alt="Fancy instructions">
 			</div> <!-- post-body-content -->
-
-
 			
 			<!-- sidebar -->
 			<div id="postbox-container-1" class="postbox-container">
 				
 				<div class="meta-box-sortables">
-					
+
 					<div class="postbox">
 					
 						<h3><span>Enter Barometer String</span></h3>
-						<?php if (isset ( __$POST)): ?>
-							
-						<?php endif ?>
+						<?php if (isset ( $_POST['barometer_string'] ) && ( $_POST['barometer_string'] != '' ) ) {   ?>
+							<?php $this->update_barometer_string(  sanitize_text_field( $_POST['barometer_string'] ) ); ?>
+						<?php } //endif ?>
 						<div class="inside">
-							<form action="options-general.php?barometer-feedback.php" method="post">
-		 						<input name="barometer_string" id="" type="text" value="" /> 
+							<form action="options-general.php?page=barometer-feedback.php" method="post">
+		 						<input name="barometer_string" id="" type="text" placeholder="<?php echo get_option( 'tk_barometer_string' );  ?>" /> 
 		 						<input class="button-primary" type="submit" name="Submit" value="<?php _e( 'Add' ); ?>" /> 							
 		 					</form>
 						</div> <!-- .inside -->

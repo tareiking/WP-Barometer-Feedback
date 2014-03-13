@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Barometer Feedback 
-Version: 0.1-alpha
-Description: A quick plugin to use the awesome Barometer Feedback JS Service - wwww.getbarometer.com
+Version: 1.0
+Description: Add a Feedback tab to your website to gather intel directly from your visitors via email. Uses the - wwww.getbarometer.com services, you will need an account and code.
 Author: Tarei King @tareiking
 Author URI: http://tarei.me
-Plugin URI: http://tarei.me/barometer
+Plugin URI: http://tarei.me
 Text Domain: barometer-feedback
 Domain Path: /languages
 */
@@ -30,7 +30,7 @@ class TK_Barometer {
 	}
 
 	function __construct() {
-		$this->barometer_string = "Pkn77MNnD8e4bLKHDm5zq";
+		$this->barometer_string = "";
 
 		add_action( 'admin_menu', array( $this, 'add_admin_menu_item' ) );
 
@@ -53,6 +53,14 @@ class TK_Barometer {
 		include( plugin_dir_path( __FILE__ ) . 'admin-page/index.php' );
 	}
 
+	public function update_barometer_string( $string ){
+		if ( get_option( 'tk_barometer_string' ) !== false ){
+			update_option( 'tk_barometer_string', $string );
+		} else {
+			add_option( 'tk_barometer_string', $this->barometer_string, '', 'yes' );
+		}
+	}
+
 	// Lets load some scripts eh -- but only on the front-end
 	public function load_barometer_scripts() {
 		wp_enqueue_style( 'barometer-css', 'https://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css' );
@@ -60,7 +68,8 @@ class TK_Barometer {
 		add_action( 'wp_footer', array( $this, 'generate_barometer_script' ), 20 );
 	}
 
-	private function get_barometer_string() {
+	public function get_barometer_string() {
+		return get_option( 'tk_barometer_string' );
 	}
 
 	// Generate a script tag that we can adjust in PHP code
@@ -69,7 +78,7 @@ class TK_Barometer {
 		?>
 
 		<script>
-			<?php echo 'BAROMETER.load(\'' . $this->barometer_string . '\');'?>
+			<?php echo 'BAROMETER.load(\'' . $this->get_barometer_string() . '\');'?>
 		</script>
 
 	<?php
