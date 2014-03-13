@@ -34,6 +34,7 @@ class TK_Barometer {
 
 		add_action( 'admin_menu', array( $this, 'add_admin_menu_item' ) );
 
+		// Loads scripts on frontpage
 		if ( ! is_admin() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_barometer_scripts' ) );
 		}
@@ -49,10 +50,14 @@ class TK_Barometer {
 		);
 	}
 
+	// Display the option page if user has 'update_plugins' capabilities
 	public function render_settings_page() {
-		include( plugin_dir_path( __FILE__ ) . 'admin-page/index.php' );
+		if( (current_user_can( 'update_plugins' ) ) ) {
+			include( plugin_dir_path( __FILE__ ) . 'admin-page/index.php' );
+		}
 	}
 
+	// Updates the barometer string used for getbarometer.com
 	public function update_barometer_string( $string ){
 		if ( get_option( 'tk_barometer_string' ) !== false ){
 			update_option( 'tk_barometer_string', $string );
@@ -68,6 +73,7 @@ class TK_Barometer {
 		add_action( 'wp_footer', array( $this, 'generate_barometer_script' ), 20 );
 	}
 
+	// Getter for barometer string: Used in admin form
 	public function get_barometer_string() {
 		return get_option( 'tk_barometer_string' );
 	}
